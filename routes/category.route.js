@@ -32,6 +32,27 @@ router.post('/',async function (req, res, next) {
       error: e.toString()
     })
   }
-})
+});
+
+router.get('/:id',async function (req, res, next) {
+  try {
+    let id = req.params.id;
+    let result = await db.query(`SELECT * FROM categories WHERE id = $1`,[id])
+    let data = result.rows;
+    if(data.length>0){
+      res.json(data[0])
+    }else{
+      res.status(404).json({
+        message: 'Record not found'
+      });
+    }
+    
+  } catch (e) {
+    res.status(413).json({
+      message: 'Error Occurred',
+      error: e.toString()
+    })
+  }
+});
 
 module.exports = router;
