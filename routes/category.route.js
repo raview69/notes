@@ -55,4 +55,21 @@ router.get('/:id',async function (req, res, next) {
   }
 });
 
+router.put('/:id',async function (req, res, next) {
+  try {
+    let id = req.params.id;
+    let { title, description} = req.body;
+    let result = await db.query(`UPDATE categories SET title = $1, description = $2 WHERE id = $3`,[title,description,id])
+    res.json({
+      message: 'Record Updated'
+    })
+
+  } catch (e) {
+    res.status(413).json({
+      message: 'Error Occurred',
+      error: e.toString()
+    })
+  }
+});
+
 module.exports = router;
