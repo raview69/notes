@@ -6,6 +6,8 @@ router.get("/", UsersController.getAll);
 
 router.post("/", UsersController.create);
 
+router.post("/sendemail", UsersController.sendMail);
+
 router.get("/:id", UsersController.getSingle);
 
 router.put("/:id", UsersController.updateSingle);
