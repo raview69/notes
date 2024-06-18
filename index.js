@@ -1,35 +1,32 @@
 #!/usr/bin/env node
 
+const express = require("express");
+const path = require("path");
+const cookieParser = require("cookie-parser");
+const logger = require("morgan");
+const http = require("http");
 
-const express = require('express');
-const path = require('path');
-const cookieParser = require('cookie-parser');
-const logger = require('morgan');
-const http = require('http');
+require("./utils/config");
 
-require('./config')
-
-const categoryRouter = require('./routes/category.route');
+const userRouter = require("./routes/user.route");
 
 const app = express();
 
-app.use(logger('dev'));
+app.use(logger("dev"));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
-app.get('/', function(req, res, next) {
+app.get("/", function (req, res, next) {
   res.json({
-    message: 'Hello World!'
-  })
+    message: "Hello World!",
+  });
 });
 
-app.use('/api/category', categoryRouter);
-
+app.use("/api/user", userRouter);
 
 const port = 3000;
-app.set('port', port);
-
+app.set("port", port);
 
 app.listen(port, () => {
   console.log("Server is running on http://localhost:" + port);

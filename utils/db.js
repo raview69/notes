@@ -1,5 +1,5 @@
-const Pool = require('pg').Pool;
-const config = require('./config')
+const Pool = require("pg").Pool;
+const config = require("./config");
 const pool = new Pool({
   user: config.DB_USER,
   host: config.DB_HOST,
@@ -11,4 +11,4 @@ const pool = new Pool({
   connectionTimeoutMillis: 2000,
 });
 
-module.exports = pool
+module.exports = pool;
