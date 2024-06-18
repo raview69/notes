@@ -9,6 +9,7 @@ const http = require("http");
 require("./utils/config");
 
 const userRouter = require("./routes/user.route");
+const authRouter = require("./routes/auth.route");
 
 const app = express();
 
@@ -24,6 +25,7 @@ app.get("/", function (req, res, next) {
 });
 
 app.use("/api/user", userRouter);
+app.use("/api/auth", authRouter);
 
 const port = 3000;
 app.set("port", port);
