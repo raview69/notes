@@ -49,6 +49,10 @@ exports.login = function (req, res) {
           var token = jwt.sign({ id: user.id }, process.env.SECRET, {
             expiresIn: 86400,
           });
+          res.cookie("token", token, {
+            maxAge: 86400,
+            httpOnly: true,
+          });
           res.json({
             message: "Login successful",
             token: token,
