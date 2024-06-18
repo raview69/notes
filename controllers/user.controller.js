@@ -9,14 +9,14 @@ let mailTransporter = nodemailer.createTransport({
   },
 });
 
-let mailDetails = {
-  from: "xyz@gmail.com",
-  to: "elyxuan0@gmail.com",
-  subject: "Test mail",
-  text: "Node.js testing mail for GeeksforGeeks",
-};
-
 exports.sendMail = async function (req, res) {
+  let { email } = req.body;
+  let mailDetails = {
+    from: "xyz@gmail.com",
+    to: email,
+    subject: "Test mail",
+    text: "Node.js testing mail for GeeksforGeeks",
+  };
   try {
     mailTransporter.sendMail(mailDetails, function (err, data) {
       if (err) {
@@ -94,7 +94,7 @@ exports.updateSingle = async function (req, res) {
     let id = req.params.id;
     let { nik, jenis_layanan, keluhan, email, no_phone, penjamin } = req.body;
     let result = await db.query(
-      `UPDATE users SET title = $1, description = $2 WHERE id = $3`,
+      `UPDATE users SET nik = $1, jenis_layanan = $2, keluhan = $3, email = $4, no_phone = $5, penjamin = $6 WHERE id = $7`,
       [nik, jenis_layanan, keluhan, email, no_phone, penjamin, id]
     );
     res.json({
