@@ -1,5 +1,6 @@
 const db = require("../utils/db");
 const nodemailer = require("nodemailer");
+var jwt = require("jsonwebtoken");
 
 let mailTransporter = nodemailer.createTransport({
   service: "gmail",
@@ -93,8 +94,17 @@ exports.create = async function (req, res) {
       `INSERT INTO users (nik,jenis_layanan,keluhan,email,no_phone,penjamin) VALUES ($1,$2,$3,$4,$5,$6)`,
       [nik, jenis_layanan, keluhan, email, no_phone, penjamin]
     );
+
+    const token = jwt.sign(
+      {
+        data: email,
+      },
+      "secret",
+      { expiresIn: 60 * 60 }
+    );
     res.status(201).json({
-      message: "Record Inserted",
+      message: "Record Created",
+      token,
     });
   } catch (e) {
     res.status(413).json({
