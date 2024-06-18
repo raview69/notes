@@ -4,6 +4,8 @@ const UsersController = require("../controllers/user.controller");
 
 router.get("/", UsersController.getAll);
 
+router.get("/findoldest", UsersController.findOldest);
+
 router.post("/", UsersController.create);
 
 router.post("/sendemail", UsersController.sendMail);

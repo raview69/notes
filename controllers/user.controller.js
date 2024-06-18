@@ -71,6 +71,21 @@ exports.getSingle = async function (req, res) {
   }
 };
 
+exports.findOldest = async function (req, res) {
+  try {
+    let result = await db.query(`SELECT * from users ORDER BY id ASC LIMIT 1`);
+    let data = result.rows;
+    res.json({
+      data,
+    });
+  } catch (e) {
+    res.status(413).json({
+      message: "Error Occurred",
+      error: e.toString(),
+    });
+  }
+};
+
 exports.create = async function (req, res) {
   try {
     let { nik, jenis_layanan, keluhan, email, no_phone, penjamin } = req.body;
