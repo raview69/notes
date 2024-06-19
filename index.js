@@ -24,8 +24,8 @@ app.get("/", function (req, res, next) {
   });
 });
 
-app.use("/api/user", userRouter);
-app.use("/api/auth", authRouter);
+app.use("/api/v1/user", userRouter);
+app.use("/api/v1/auth", authRouter);
 
 const port = 3000;
 app.set("port", port);
