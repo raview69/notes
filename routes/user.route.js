@@ -6,9 +6,6 @@ require("dotenv").config();
 
 const verifyToken = (req, res, next) => {
   const token = req.headers["authorization"];
-  console.log(token);
-  console.log(process.env.SECRET);
-
   const secret = process.env.SECRET;
 
   if (!token) {

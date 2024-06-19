@@ -1,6 +1,5 @@
 const db = require("../utils/db");
 const nodemailer = require("nodemailer");
-var jwt = require("jsonwebtoken");
 
 let mailTransporter = nodemailer.createTransport({
   service: "gmail",
