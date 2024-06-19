@@ -9,33 +9,6 @@ let mailTransporter = nodemailer.createTransport({
   },
 });
 
-exports.sendMail = async function (req, res) {
-  let { email } = req.body;
-  let mailDetails = {
-    from: "xyz@gmail.com",
-    to: email,
-    subject: "Test mail",
-    text: "Node.js testing mail for GeeksforGeeks",
-  };
-  try {
-    mailTransporter.sendMail(mailDetails, function (err, data) {
-      if (err) {
-        console.log("Error Occurs", err);
-      } else {
-        console.log("Email sent successfully");
-      }
-    });
-    res.status(201).json({
-      message: "Email sent successfully",
-    });
-  } catch (e) {
-    res.status(413).json({
-      message: "Error Occurred",
-      error: e.toString(),
-    });
-  }
-};
-
 exports.getAll = async function (req, res) {
   try {
     let result = await db.query(`SELECT * from users`);
@@ -129,6 +102,38 @@ exports.deleteSingle = async function (req, res) {
     let result = await db.query(`DELETE FROM users WHERE id = $1`, [id]);
     res.json({
       message: "Record Deleted",
+    });
+  } catch (e) {
+    res.status(413).json({
+      message: "Error Occurred",
+      error: e.toString(),
+    });
+  }
+};
+
+exports.sendMail = async function (req, res) {
+  let { email } = req.body;
+  let mailDetails = {
+    from: "yuzentadashi@gmail.com",
+    to: email,
+    subject: "Informasi penting pendaftaran puskesmas!",
+    text: "Mohon segera datang ke puskesmas, nomor antrian anda segera dipanggil",
+  };
+  const findLast = await db.query(
+    `SELECT * from users ORDER BY id ASC LIMIT 1`
+  );
+  const id = findLast.rows[0].id;
+  try {
+    mailTransporter.sendMail(mailDetails, async function (err, data) {
+      if (err) {
+        console.log("Error Occurs", err);
+      } else {
+        console.log("Email sent successfully");
+        await db.query(`DELETE FROM users WHERE id = $1`, [id]);
+      }
+    });
+    res.status(201).json({
+      message: "Email sent successfully",
     });
   } catch (e) {
     res.status(413).json({
