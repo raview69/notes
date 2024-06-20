@@ -7,8 +7,7 @@ const logger = require("morgan");
 const http = require("http");
 const cors = require("cors");
 
-const userRouter = require("./routes/user.route");
-const authRouter = require("./routes/auth.route");
+const notesRouter = require("./routes/notes.route");
 
 const app = express();
 
@@ -24,8 +23,7 @@ app.get("/", function (req, res, next) {
   });
 });
 
-app.use("/api/v1/user", userRouter);
-app.use("/api/v1/auth", authRouter);
+app.use("/api/v1/notes", notesRouter);
 
 const port = 3000;
 app.set("port", port);
